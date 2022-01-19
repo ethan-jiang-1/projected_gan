@@ -26,3 +26,6 @@ tags
 *.pkl
 *.mp4
 *.pyc
+
+few-shot-image-dataset.zip
+few-shot-images
