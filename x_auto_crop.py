@@ -6,8 +6,6 @@ import pprint
 import json
 
 PAD_EXP = 128
-
-
 s_points = []
 s_click_count = 0
 s_click_quit = False
@@ -49,17 +47,6 @@ def colorstr(*input):
               'bold': '\033[1m',
               'underline': '\033[4m'}
     return ''.join(colors[x] for x in args) + f'{string}' + colors['end']
-
-
-def create_expanded(img_org):
-    shape = img_org.shape
-    shape_exp = (shape[0] + 2 * PAD_EXP, shape[1] + 2 * PAD_EXP, shape[2])
-    val_bg = img_org[0][0]
-    img_exp = np.zeros(shape_exp, dtype=img_org.dtype)
-    img_exp.fill(val_bg[0])
-    img_exp[PAD_EXP:img_org.shape[0] + PAD_EXP, PAD_EXP:img_org.shape[1] + PAD_EXP] = img_org
-    return img_exp
-
 
 def find_crop_pts_from_org(args, params):
     global s_points, s_click_count, s_click_quit
@@ -160,23 +147,47 @@ def find_crop_pts_from_org(args, params):
     print(colorstr("blue", "#Let's try one more time..."))
     return False
 
-    
-def crop_from_exp(args, params):
-    pass
 
-def show_imgs(params):
+def create_padded_img(img_org):
+    shape = img_org.shape
+    shape_exp = (shape[0] + 2 * PAD_EXP, shape[1] + 2 * PAD_EXP, shape[2])
+    val_bg = img_org[0][0]
+    img_exp = np.zeros(shape_exp, dtype=img_org.dtype)
+    img_exp.fill(val_bg[0])
+    img_exp[PAD_EXP:img_org.shape[0] + PAD_EXP, PAD_EXP:img_org.shape[1] + PAD_EXP] = img_org
+    return img_exp
+
+def crop_imgs_from_padded_img(args, params):
     img_org = params.img_org
-    img_exp = params.img_exp
+    img_pad = create_padded_img(img_org)
 
-    plt.figure()
-    plt.subplot(121)
-    plt.axis('off')
-    plt.imshow(img_org)
-    plt.subplot(122)
-    plt.axis('off')
-    plt.imshow(img_exp)
-    print("Pause to showup plt.imshow")
-    plt.close()
+    crop_pts = params.crop.pts
+    for idx, pts in enumerate(crop_pts):
+        pt1 = (pts[0][0] + PAD_EXP,  pts[0][1] + PAD_EXP) 
+        pt2 = (pts[1][0] + PAD_EXP,  pts[1][1] + PAD_EXP)
+        height = pt2[1] - pt1[1]
+        width = pt2[0] - pt1[0]
+        img_crop = np.zeros((height, width, img_org.shape[2]))
+        img_crop =  img_pad[pt1[1]:pt2[1], pt1[0]:pt2[0]]
+
+        img_path = "{}/{}_{:02d}.jpg".format(args.dir_dst, args.img_name, idx)
+        cv2.imwrite(img_path, img_crop)
+        print(colorstr("green", "generate {} out of {}".format(img_path, args.img_fname)))
+
+
+# def show_imgs(params):
+#     img_org = params.img_org
+#     img_exp = params.img_exp
+
+#     plt.figure()
+#     plt.subplot(121)
+#     plt.axis('off')
+#     plt.imshow(img_org)
+#     plt.subplot(122)
+#     plt.axis('off')
+#     plt.imshow(img_exp)
+#     print("Pause to showup plt.imshow")
+#     plt.close()
 
 
 def crop_file(filename, args):
@@ -200,20 +211,53 @@ def crop_file(filename, args):
 
     params = dotdict()
     params.img_org = img_org
-    params.img_exp = create_expanded(img_org)
 
     while True:
         if find_crop_pts_from_org(args, params):
             break
-    crop_from_exp(args, params)
-    #show_imgs(params)
+    crop_imgs_from_padded_img(args, params)
 
 
 if __name__ == "__main__":
     filename = "few-shot-plants/planets_org/S01-6x5.jpg"
-    filename = "few-shot-plants/planets_org/S34-3x2.jpg"
-    #filename = "few-shot-plants/planets_org/S32-12x4.jpg"
+    filename = 'few-shot-plants/planets_org/S02-3x3.jpg'
+    filename = 'few-shot-plants/planets_org/S03-5x4.jpg'
+    filename = 'few-shot-plants/planets_org/S04-3x3.jpg'
+    filename = 'few-shot-plants/planets_org/S05-5x4.jpg'
+    filename = 'few-shot-plants/planets_org/S06-5x4.jpg'
+    filename = 'few-shot-plants/planets_org/S07-4x4.jpg'
+    filename = 'few-shot-plants/planets_org/S08-6x5.jpg'
 
-    args = dotdict({"dir_dst": "few-shot-plants/planets"})
+    filename = 'few-shot-plants/planets_org/S10-3x3.jpg'
+    filename = 'few-shot-plants/planets_org/S11-3x3.jpg'
+    filename = 'few-shot-plants/planets_org/S12-4x4.jpg'
+    filename = 'few-shot-plants/planets_org/S13-3x3.jpg'
+    filename = 'few-shot-plants/planets_org/S14-3x3.jpg'
+
+    filename = 'few-shot-plants/planets_org/S20-3x3.jpg'
+    filename = 'few-shot-plants/planets_org/S21-3x3.jpg'
+    filename = 'few-shot-plants/planets_org/S22-4x4.jpg'
+    filename = 'few-shot-plants/planets_org/S23-4x4.jpg'
+    filename = 'few-shot-plants/planets_org/S24-3x3.jpg'
+    filename = 'few-shot-plants/planets_org/S25-3x4.jpg'
+
+    filename = 'few-shot-plants/planets_org/S30-3x3.jpg'
+    filename = 'few-shot-plants/planets_org/S31-3x3.jpg'
+    filename = "few-shot-plants/planets_org/S32-12x4.jpg"
+    filename = 'few-shot-plants/planets_org/S33-3x2.jpg'
+    filename = "few-shot-plants/planets_org/S34-3x2.jpg"
+    filename = 'few-shot-plants/planets_org/S35-2x2.jpg'
+
+    filename = 'few-shot-plants/planets_org/S40-4x4.jpg'
+    filename = 'few-shot-plants/planets_org/S41-6x5.jpg'
+    filename = 'few-shot-plants/planets_org/S42-3x3.jpg'
+    filename = 'few-shot-plants/planets_org/S43-3x3.jpg'
+    filename = 'few-shot-plants/planets_org/S44-3x2.jpg'
+    filename = 'few-shot-plants/planets_org/S45-3x3.jpg'
+    filename = 'few-shot-plants/planets_org/S46-6x5.jpg'
+    filename = 'few-shot-plants/planets_org/S47-3x2.jpg'
+ 
+ 
+    args = dotdict({"dir_dst": "few-shot-plants/planets/img"})
     crop_file(filename, args)
 
