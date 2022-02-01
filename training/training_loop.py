@@ -404,6 +404,10 @@ def training_loop(
             if hasattr(loss, 'pl_mean'):
                 snapshot_data['progress']['pl_mean'] = loss.pl_mean.cpu()
 
+            if os.path.isfile(snapshot_pkl):
+                if os.path.isfile(snapshot_pkl + ".prev"):
+                    os.unlink(snapshot_pkl + ".prev")
+                os.rename(snapshot_pkl, snapshot_pkl + ".prev")
             with open(snapshot_pkl, 'wb') as f:
                 pickle.dump(snapshot_data, f)
 
