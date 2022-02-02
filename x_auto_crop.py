@@ -256,7 +256,25 @@ if __name__ == "__main__":
     filename = 'few-shot-plants/planets_org/S45-3x3.jpg'
     filename = 'few-shot-plants/planets_org/S46-6x5.jpg'
     filename = 'few-shot-plants/planets_org/S47-3x2.jpg'
- 
+
+    filename = 'few-shot-plants/planets_org/S60-5x3.jpg'
+    filename = 'few-shot-plants/planets_org/S61-3x3.jpg'
+    filename = 'few-shot-plants/planets_org/S62-3x3.jpg'
+    filename = 'few-shot-plants/planets_org/S63-3x3.jpg'
+    filename = 'few-shot-plants/planets_org/S64-3x2.jpg'
+    filename = 'few-shot-plants/planets_org/S65-2x2.jpg'
+    filename = 'few-shot-plants/planets_org/S66-3x2.jpg'
+
+    filename = 'few-shot-plants/planets_org/S70-5x3.jpg'
+    filename = 'few-shot-plants/planets_org/S71-8x4.jpg'
+    filename = 'few-shot-plants/planets_org/S72-5x4.jpg'
+    filename = 'few-shot-plants/planets_org/S73-3x3.jpg'
+    filename = 'few-shot-plants/planets_org/S74-3x3.jpg'
+    filename = 'few-shot-plants/planets_org/S75-4x3.jpg'
+
+    filename = 'few-shot-plants/planets_org/S80-3x2.jpg'
+    filename = 'few-shot-plants/planets_org/S81-3x2.jpg'
+    filename = 'few-shot-plants/planets_org/S82-3x2.jpg'
  
     args = dotdict({"dir_dst": "few-shot-plants/planets/img"})
     crop_file(filename, args)
