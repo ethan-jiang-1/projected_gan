@@ -411,6 +411,21 @@ def training_loop(
             with open(snapshot_pkl, 'wb') as f:
                 pickle.dump(snapshot_data, f)
 
+        if (rank == 0) and (restart_every > 0) and (network_snapshot_ticks is not None) and (cur_tick % 500 == 0):
+            snapshot_pkl_recover = misc.get_ckpt_path(run_dir) + ".{06d}".format(cur_tick)
+            # save as tensors to avoid error for multi GPU
+            snapshot_data['progress'] = {
+                'cur_nimg': torch.LongTensor([cur_nimg]),
+                'cur_tick': torch.LongTensor([cur_tick]),
+                'batch_idx': torch.LongTensor([batch_idx]),
+                'best_fid': best_fid,
+            }
+            if hasattr(loss, 'pl_mean'):
+                snapshot_data['progress']['pl_mean'] = loss.pl_mean.cpu()
+
+            with open(snapshot_pkl_recover, 'wb') as f:
+                pickle.dump(snapshot_data, f)
+
         # Evaluate metrics.
         # if (snapshot_data is not None) and (len(metrics) > 0):
         if cur_tick and (snapshot_data is not None) and (len(metrics) > 0):
