@@ -156,28 +156,28 @@ def do_exam_file():
                    "debug": True})
     os.makedirs(args.dir_dst, exist_ok=True)
 
-    #filename = "few-shot-plants/planets/img/S82_05.jpg"
-    #filename = "few-shot-plants/planets/img/S82_03.jpg"
+    #filename = "few-shot-plants/planets_crop/S82_05.jpg"
+    #filename = "few-shot-plants/planets_crop/S82_03.jpg"
     
-    #filename = "few-shot-plants/planets/img/S81_05.jpg"
+    #filename = "few-shot-plants/planets_crop/S81_05.jpg"
     
-    #filename = "few-shot-plants/planets/img/S75_11.jpg"
-    #filename = "few-shot-plants/planets/img/S71_26.jpg"
-    #filename = "few-shot-plants/planets/img/S01_09.jpg"
-    #filename = "few-shot-plants/planets/img/S01_29.jpg"
+    #filename = "few-shot-plants/planets_crop/S75_11.jpg"
+    #filename = "few-shot-plants/planets_crop/S71_26.jpg"
+    #filename = "few-shot-plants/planets_crop/S01_09.jpg"
+    #filename = "few-shot-plants/planets_crop/S01_29.jpg"
     
-    #filename = "few-shot-plants/planets/img/S03_13.jpg"
+    #filename = "few-shot-plants/planets_crop/S03_13.jpg"
     
-    #filename = "few-shot-plants/planets/img/S05_02.jpg"
-    #filename = "few-shot-plants/planets/img/S05_12.jpg"
+    #filename = "few-shot-plants/planets_crop/S05_02.jpg"
+    #filename = "few-shot-plants/planets_crop/S05_12.jpg"
 
-    filename = "few-shot-plants/planets/img/S01_04.jpg"
-    filename = "few-shot-plants/planets/img/S01_08.jpg"
-    filename = "few-shot-plants/planets/img/S01_14.jpg"
-    filename = "few-shot-plants/planets/img/S01_18.jpg"
-    filename = "few-shot-plants/planets/img/S01_22.jpg"
+    filename = "few-shot-plants/planets_crop/S01_04.jpg"
+    filename = "few-shot-plants/planets_crop/S01_08.jpg"
+    filename = "few-shot-plants/planets_crop/S01_14.jpg"
+    filename = "few-shot-plants/planets_crop/S01_18.jpg"
+    filename = "few-shot-plants/planets_crop/S01_22.jpg"
 
-    filename = "few-shot-plants/planets/img/S03_00.jpg"
+    filename = "few-shot-plants/planets_crop/S03_00.jpg"
     
     args.debug = True
     dst_path = center_img_and_align(filename, args)
@@ -188,7 +188,7 @@ def do_exam_folder():
                     "debug": False})
     os.makedirs(args.dir_dst, exist_ok=True)
 
-    dir_src = "few-shot-plants/planets/img"
+    dir_src = "few-shot-plants/planets_crop"
     filenames = sorted(os.listdir(dir_src))
     filed_filenames = []
     for name in filenames:
