@@ -1,3 +1,4 @@
+from attr import has
 import cv2 
 import os
 import matplotlib.pyplot as plt
@@ -65,7 +66,7 @@ def get_center_of_contour(cnt):
 def find_img_center(img):
     ix, iy = img.shape[1], img.shape[0]
     img_thresh, cnts = find_img_thresh(img)
-    print("num of cnts", len(cnts))
+    #print("num of cnts", len(cnts))
     if len(cnts) == 1:
         cX, cY = get_center_of_contour(cnts[0])
         return (cX, cY), 1
@@ -124,12 +125,17 @@ def gen_aligned_img(img_org, pt0, pt1,  cx, cy, filename, args):
     img_new = img_org[pt0[1]:pt1[1], pt0[0]:pt1[0]]
     
     bname = os.path.basename(filename)
-    pname = "{}/{}_{}x{}.jpg".format(args.dir_dst, bname.split(".")[0], nh, nw)
 
     if args.debug:
         mark_center_debug(img_org, img_new, cx, cy, pt0, pt1)
 
-    cv2.imwrite(pname, img_new) 
+    if hasattr(args, "resize"):
+        img_resize = cv2.resize(img_new, (args.resize, args.resize))
+        pname = "{}/{}_{}x{}.jpg".format(args.dir_dst, bname.split(".")[0], args.resize, args.resize)
+        cv2.imwrite(pname, img_resize)
+    else:
+        pname = "{}/{}_{}x{}.jpg".format(args.dir_dst, bname.split(".")[0], nh, nw)
+        cv2.imwrite(pname, img_new) 
     return pname
     
 
@@ -201,10 +207,29 @@ def do_exam_folder():
         else:
             filed_filenames.append(filename)
 
+def do_exam_folder_256():
+    args = dotdict({"dir_dst": "few-shot-plants/planets-aligned-256",
+                    "debug": False,
+                    "resize":256})
+    os.makedirs(args.dir_dst, exist_ok=True)
+
+    dir_src = "few-shot-plants/planets_crop"
+    filenames = sorted(os.listdir(dir_src))
+    filed_filenames = []
+    for name in filenames:
+        if not name.endswith(".jpg"):
+            continue
+        filename = "{}/{}".format(dir_src, name)
+        dst_path = center_img_and_align(filename, args)
+        if dst_path is not None:
+            print(dst_path)
+        else:
+            filed_filenames.append(filename)
 
 if __name__ == "__main__":
     #do_exam_file()
-    do_exam_folder()
+    #do_exam_folder()
+    do_exam_folder_256()
 
 
     
