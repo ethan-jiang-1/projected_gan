@@ -1,10 +1,7 @@
-from attr import has
 import cv2 
 import os
 import matplotlib.pyplot as plt
 import numpy as np
-#import pprint
-#import json
 
 class dotdict(dict):
     """dot.notation access to dictionary attributes"""
@@ -210,7 +207,7 @@ def do_exam_folder():
 def do_exam_folder_256():
     args = dotdict({"dir_dst": "few-shot-plants/planets-aligned-256",
                     "debug": False,
-                    "resize":256})
+                    "resize": 256})
     os.makedirs(args.dir_dst, exist_ok=True)
 
     dir_src = "few-shot-plants/planets_crop"
@@ -225,6 +222,7 @@ def do_exam_folder_256():
             print(dst_path)
         else:
             filed_filenames.append(filename)
+
 
 if __name__ == "__main__":
     #do_exam_file()
