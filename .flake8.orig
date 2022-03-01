@@ -1,0 +1,8 @@
+[flake8]
+<<<<<<< HEAD
+ignore = E501 E302 E128 W293 W291 E265 W504 E402 W391 E266 E241 E226 E117 E251 E111 E126 E114 E121, E127, E261, E722, E124, E231, E201, E202, E221, E701, E203, E306, E305, E225, E211, E713, E272, F541, E304
+exclude = dnnlib docs metrics training torch_utils pg_modules 
+=======
+ignore = E501 E302 E128 W293 W291 E265 W504 E402 W391 E266 E241 E226 E117 E251 E111 E126 E114 E121, E127, E261, E722, E124
+exclude = dnnlib meida metrics pg_modules torch_utils training train.py calc_metrics.py dataset_tool.py gen_images.py gen_video.py legacy.py train.py
+>>>>>>> planets256
