@@ -412,7 +412,7 @@ def training_loop(
                 pickle.dump(snapshot_data, f)
 
         if (rank == 0) and (restart_every > 0) and (network_snapshot_ticks is not None) and (cur_tick % 400 == 0):
-            snapshot_pkl_recover = misc.get_ckpt_path(run_dir) + ".{06d}".format(cur_tick)
+            snapshot_pkl_recover = misc.get_ckpt_path(run_dir) + ".{:06d}".format(cur_tick)
             # save as tensors to avoid error for multi GPU
             snapshot_data['progress'] = {
                 'cur_nimg': torch.LongTensor([cur_nimg]),
