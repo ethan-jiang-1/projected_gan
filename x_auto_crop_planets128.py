@@ -1,6 +1,6 @@
 import cv2 
 import os
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import numpy as np
 import pprint
 import json
@@ -168,7 +168,7 @@ def crop_imgs_from_padded_img(args, params):
         height = pt2[1] - pt1[1]
         width = pt2[0] - pt1[0]
         img_crop = np.zeros((height, width, img_org.shape[2]))
-        img_crop =  img_pad[pt1[1]:pt2[1], pt1[0]:pt2[0]]
+        img_crop = img_pad[pt1[1]:pt2[1], pt1[0]:pt2[0]]
 
         img_path = "{}/{}_{:02d}.jpg".format(args.dir_dst, args.img_name, idx)
         cv2.imwrite(img_path, img_crop)
